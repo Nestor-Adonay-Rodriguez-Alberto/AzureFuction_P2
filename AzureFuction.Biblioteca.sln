@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureFuction.Biblioteca", "AzureFuction.Biblioteca\AzureFuction.Biblioteca.csproj", "{EA76F440-257E-479B-81B7-9BED79703248}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{72AB31F6-DC2D-4064-A146-718BBA99639B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{5F91CEF6-03FF-4A27-BE3F-545783959297}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infraestructura", "Infraestructura", "{8A7011CB-F1B6-462D-9E67-CEF2E3930165}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{CAD14043-9A6D-4012-9262-9CE98BAAB375}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossCutting", "CrossCutting\CrossCutting.csproj", "{E41FBC2F-AEC8-43CD-A79B-567BD67B0287}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{EE1EB3BE-A561-4AAC-8754-396BD2F7175A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EA76F440-257E-479B-81B7-9BED79703248}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA76F440-257E-479B-81B7-9BED79703248}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA76F440-257E-479B-81B7-9BED79703248}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA76F440-257E-479B-81B7-9BED79703248}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAD14043-9A6D-4012-9262-9CE98BAAB375}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAD14043-9A6D-4012-9262-9CE98BAAB375}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAD14043-9A6D-4012-9262-9CE98BAAB375}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAD14043-9A6D-4012-9262-9CE98BAAB375}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E41FBC2F-AEC8-43CD-A79B-567BD67B0287}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E41FBC2F-AEC8-43CD-A79B-567BD67B0287}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E41FBC2F-AEC8-43CD-A79B-567BD67B0287}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E41FBC2F-AEC8-43CD-A79B-567BD67B0287}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE1EB3BE-A561-4AAC-8754-396BD2F7175A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE1EB3BE-A561-4AAC-8754-396BD2F7175A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE1EB3BE-A561-4AAC-8754-396BD2F7175A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE1EB3BE-A561-4AAC-8754-396BD2F7175A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EA76F440-257E-479B-81B7-9BED79703248} = {72AB31F6-DC2D-4064-A146-718BBA99639B}
+		{CAD14043-9A6D-4012-9262-9CE98BAAB375} = {5F91CEF6-03FF-4A27-BE3F-545783959297}
+		{E41FBC2F-AEC8-43CD-A79B-567BD67B0287} = {8A7011CB-F1B6-462D-9E67-CEF2E3930165}
+		{EE1EB3BE-A561-4AAC-8754-396BD2F7175A} = {8A7011CB-F1B6-462D-9E67-CEF2E3930165}
+	EndGlobalSection
+EndGlobal
