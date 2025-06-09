@@ -9,7 +9,7 @@ namespace Domain.Entidades
         public int AutorId { get; set; }
         public int EditorialId { get; set; }
 
-        public Autor Autor { get; set; } = new Autor();
-        public Editorial Editorial { get; set; } = new Editorial();
+        public Autor Autor { get; set; }
+        public Editorial Editorial { get; set; }
     }
 }

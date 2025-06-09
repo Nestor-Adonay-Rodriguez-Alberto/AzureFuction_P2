@@ -10,7 +10,7 @@ namespace DataAccess.Persistence.Tables
         public int AutorId { get; set; }
         public int EditorialId { get; set; }
 
-        public AutorTable Autor { get; set; } = new AutorTable();
-        public EditorialTable Editorial { get; set; } = new EditorialTable();
+        public AutorTable Autor { get; set; }
+        public EditorialTable Editorial { get; set; }
     }
 }
