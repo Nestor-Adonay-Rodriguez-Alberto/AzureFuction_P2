@@ -2,6 +2,7 @@
 
 using AzureFuction.Biblioteca.Aplication.DTOs.Models;
 using AzureFuction.Biblioteca.Aplication.DTOs.Responses;
+using AzureFuction.Biblioteca.Aplication.Mappers;
 using AzureFuction.Biblioteca.Aplication.Services;
 using Domain.Repositories;
 using Microsoft.AspNetCore.Http;
@@ -14,13 +15,14 @@ namespace AzureFuction.Biblioteca.Controllers
 {
     public class FnLibro
     {
-        public readonly ILogger<FnLibro> _Logger;
-        public readonly ILibro _LibroRepository;
+        private readonly ILogger<FnLibro> _Logger;
+        private readonly ILibroService _service;
 
-        public FnLibro(ILogger<FnLibro> logger, ILibro libroRepository)
+
+        public FnLibro(ILogger<FnLibro> logger, ILibroService service)
         {
             _Logger = logger;
-            _LibroRepository = libroRepository;
+            _service = service;
         }
 
 
@@ -29,7 +31,7 @@ namespace AzureFuction.Biblioteca.Controllers
         public async Task<IActionResult> SaveLibro([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "azure-fuction/save-libro")] HttpRequest req)
         {
             _Logger.LogInformation("Saving El Libro...");
-            LibroService _service = new(_LibroRepository);
+
 
             try
             {

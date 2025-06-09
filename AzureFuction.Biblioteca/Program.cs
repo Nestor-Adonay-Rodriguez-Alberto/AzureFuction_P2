@@ -1,4 +1,7 @@
+using AzureFuction.Biblioteca.Aplication.Mappers;
+using AzureFuction.Biblioteca.Aplication.Services;
 using DataAccess;
+using DataAccess.Persistence.Mappers;
 using DataAccess.Repositories;
 using Domain.Repositories;
 using Microsoft.Azure.Functions.Worker;
@@ -28,6 +31,14 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // INYECCIONES DE REPOSITORIOS:
 builder.Services.AddScoped<ILibro, LibroRepository>();
+
+// INYECCIONES DE SERVICES:
+builder.Services.AddScoped<ILibroService, LibroService>();
+
+// INYECCIONES DE MAPPERS:
+builder.Services.AddScoped<ILibroDtoMapper, LibroDtoMapper>();
+builder.Services.AddScoped<ILibroEntityMapper, LibroEntityMapper>();
+
 
 // CONFIGURACION SERIALIZACION EN CAMELCASE
 builder.Services.AddSingleton<JsonSerializerSettings>(new JsonSerializerSettings

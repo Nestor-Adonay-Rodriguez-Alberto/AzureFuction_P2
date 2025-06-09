@@ -1,20 +1,23 @@
 ﻿using AzureFuction.Biblioteca.Aplication.DTOs.Models;
 using AzureFuction.Biblioteca.Aplication.DTOs.Responses;
+using AzureFuction.Biblioteca.Aplication.Mappers;
 using DataAccess.Persistence.Tables;
 using Domain.Entidades;
 using Domain.Repositories;
-using System;
 
 
 namespace AzureFuction.Biblioteca.Aplication.Services
 {
-    public class LibroService
+    public class LibroService : ILibroService
     {
-        public ILibro _LibroRepository;
+        private readonly ILibro _LibroRepository;
+        private readonly ILibroDtoMapper _mapper;
 
-        public LibroService(ILibro _ILibro) 
+
+        public LibroService(ILibro _ILibro, ILibroDtoMapper mapper) 
         {
             _LibroRepository = _ILibro;
+            _mapper = mapper;
         }
 
 
@@ -23,9 +26,9 @@ namespace AzureFuction.Biblioteca.Aplication.Services
         // SAVE - UPDATE:
         public async Task<ResponseDTO<LibroDTO>> SaveLibro(LibroDTO libroDTO)
         {
-            Libro newLibro = MapToEntity(libroDTO);
+            Libro newLibro = _mapper.MapToEntity(libroDTO);
             newLibro =  await _LibroRepository.SaveLibro(newLibro);
-            LibroDTO libro = MapToDTO(newLibro);
+            LibroDTO libro = _mapper.MapToDTO(newLibro);
 
             ResponseDTO<LibroDTO> responseDTO = new()
             {
@@ -37,52 +40,5 @@ namespace AzureFuction.Biblioteca.Aplication.Services
             return responseDTO;
         }
 
-
-
-        // DTO TO ENTITY:
-        private Libro MapToEntity(LibroDTO libroDTO) 
-        {
-            Libro libro = new()
-            {
-                Id = libroDTO.Id,
-                Titulo = libroDTO.Titulo,
-                AutorId = libroDTO.AutorId,
-                EditorialId = libroDTO.EditorialId,
-            };
-
-            return libro;
-        }
-
-        // ENTITY TO DTO:
-        private LibroDTO MapToDTO(Libro libro)
-        {
-            LibroDTO libroDTO = new()
-            {
-                Id = libro.Id,
-                Titulo = libro.Titulo,
-                AutorId = libro.AutorId,
-                EditorialId = libro.EditorialId,
-            };
-
-            if (libro.Autor != null)
-            {
-                libroDTO.Autor = new()
-                {
-                    Id = libro.Autor.Id,
-                    Nombre = libro.Autor.Nombre
-                };
-            }
-
-            if (libro.Editorial != null)
-            {
-                libroDTO.Editorial = new()
-                {
-                    Id = libro.Editorial.Id,
-                    Nombre = libro.Editorial.Nombre
-                };
-            }
-
-            return libroDTO;
-        }
     }
 }
