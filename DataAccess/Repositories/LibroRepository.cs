@@ -1,10 +1,9 @@
-﻿
-
-using DataAccess.Persistence.Mappers;
+﻿using DataAccess.Persistence.Mappers;
 using DataAccess.Persistence.Tables;
 using Domain.Entidades;
 using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
+
 
 namespace DataAccess.Repositories
 {

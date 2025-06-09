@@ -1,7 +1,6 @@
 ﻿using AzureFuction.Biblioteca.Aplication.DTOs.Models;
 using AzureFuction.Biblioteca.Aplication.DTOs.Responses;
 using AzureFuction.Biblioteca.Aplication.Mappers;
-using DataAccess.Persistence.Tables;
 using Domain.Entidades;
 using Domain.Repositories;
 
