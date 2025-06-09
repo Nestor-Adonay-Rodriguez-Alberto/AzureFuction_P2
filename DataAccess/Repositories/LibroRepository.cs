@@ -1,5 +1,6 @@
 ﻿
 
+using DataAccess.Persistence.Mappers;
 using DataAccess.Persistence.Tables;
 using Domain.Entidades;
 using Domain.Repositories;
@@ -10,10 +11,12 @@ namespace DataAccess.Repositories
     public class LibroRepository : ILibro
     {
         private readonly AppDbContext _DbContext;
+        private readonly ILibroEntityMapper _mapper;
 
-        public LibroRepository(AppDbContext dbContext)
+        public LibroRepository(AppDbContext dbContext, ILibroEntityMapper mappe)
         {
             _DbContext = dbContext;
+            _mapper = mappe;
         }
 
 
@@ -29,7 +32,7 @@ namespace DataAccess.Repositories
 
                 if (newLibro.Id == 0)
                 {
-                    libroTable = MapToTable(newLibro);
+                    libroTable = _mapper.MapToTable(newLibro);
                     _DbContext.Libro.Add(libroTable);
                     await _DbContext.SaveChangesAsync();
                     await transaction.CommitAsync();
@@ -49,7 +52,7 @@ namespace DataAccess.Repositories
                 }
 
                 LibroTable? libro = await _DbContext.Libro.FirstOrDefaultAsync(x => x.Id == libroTable.Id);
-                return MapToEntity(libro!);
+                return _mapper.MapToEntity(libro!);
             }
             catch (DbUpdateException ex)
             {
@@ -80,20 +83,6 @@ namespace DataAccess.Repositories
         }
 
 
-
-        // ENTITY TO TABLE:
-        private LibroTable MapToTable(Libro newLibro)
-        {
-            LibroTable libroTable = new()
-            {
-                Id = newLibro.Id,
-                Titulo = newLibro.Titulo,
-                AutorId = newLibro.AutorId,
-                EditorialId = newLibro.EditorialId,
-            };
-
-            return libroTable;
-        }
 
         // TABLE TO ENTITY:
         private Libro MapToEntity(LibroTable libroTable)
