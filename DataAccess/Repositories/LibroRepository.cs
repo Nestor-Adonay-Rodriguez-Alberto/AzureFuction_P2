@@ -66,6 +66,20 @@ namespace DataAccess.Repositories
         }
 
 
+        // GET:
+        public async Task<Libro> GetById(int Id)
+        {
+            LibroTable? libroTable = await _DbContext.Libro.FirstOrDefaultAsync(l => l.Id == Id);
+            
+            if (libroTable == null)
+            {
+                throw new InvalidOperationException($"No se encontró el Libro con ID {Id}.");
+            }
+
+            return _mapper.MapToEntity(libroTable);
+        }
+
+
         public Task DeleteById(int id)
         {
             throw new NotImplementedException();
@@ -76,10 +90,6 @@ namespace DataAccess.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<Libro> GetById(int Id)
-        {
-            throw new NotImplementedException();
-        }
 
     }
 }

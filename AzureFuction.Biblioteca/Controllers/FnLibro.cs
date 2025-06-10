@@ -51,5 +51,29 @@ namespace AzureFuction.Biblioteca.Controllers
                 return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
         }
+
+
+        // GET:
+        [Function("fn-get-libro-id")]
+        public async Task<IActionResult> GetById([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "azure-fuction/get-libro/{Id}")] HttpRequest req, int Id)
+        {
+            _Logger.LogInformation("Obteniendo El Libro...");
+
+            try
+            {
+                ResponseDTO<LibroDTO> response = await _service.GetById(Id);
+                return new OkObjectResult(response);
+            }
+            catch (InvalidOperationException ex)
+            {
+                _Logger.LogError($"Error al obtener el Libro: {ex.Message}");
+                return new NotFoundObjectResult(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _Logger.LogError($"Error inesperado al obtener el empleado: {ex.Message}");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+        }
     }
 }
