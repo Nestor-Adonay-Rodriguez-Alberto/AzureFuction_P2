@@ -75,5 +75,28 @@ namespace AzureFuction.Biblioteca.Controllers
                 return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
         }
+
+        // DELETE:
+        [Function("fn-delete-libro")]
+        public async Task<IActionResult> DeleteById([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "azure-fuction/delete-libro/{Id}")] HttpRequest req, int Id)
+        {
+            _Logger.LogInformation("Eliminando El Libro...");
+
+            try
+            {
+                ResponseDTO<LibroDTO> response = await _service.DeleteById(Id);
+                return new OkObjectResult(response);
+            }
+            catch (InvalidOperationException ex)
+            {
+                _Logger.LogError($"Error al eliminar el Libro: {ex.Message}");
+                return new NotFoundObjectResult(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _Logger.LogError($"Error inesperado al obtener el empleado: {ex.Message}");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+        }
     }
 }

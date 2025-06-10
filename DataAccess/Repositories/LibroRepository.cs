@@ -80,9 +80,18 @@ namespace DataAccess.Repositories
         }
 
 
-        public Task DeleteById(int id)
+        // DELETE:
+        public async Task DeleteById(int id)
         {
-            throw new NotImplementedException();
+            LibroTable? libroTable = await _DbContext.Libro.FirstOrDefaultAsync(l => l.Id == id);
+
+            if (libroTable == null)
+            {
+                throw new InvalidOperationException($"No se encontró el Libro con ID {id}.");
+            }
+
+            _DbContext.Libro.Remove(libroTable);
+            await _DbContext.SaveChangesAsync();
         }
 
         public Task<(int, List<Libro>)> GetAllLibros(string search, int page, int pageSize)

@@ -57,5 +57,22 @@ namespace AzureFuction.Biblioteca.Aplication.Services
             return responseDTO;
         }
 
+
+        // DELETE:
+        public async Task<ResponseDTO<LibroDTO>> DeleteById(int Id)
+        {
+            await _LibroRepository.DeleteById(Id);
+
+            ResponseDTO<LibroDTO> responseDTO = new()
+            {
+                Message = "Libro Eliminado Con Exito.",
+                Status = true,
+                Data = null
+                
+            };
+
+            return responseDTO;
+        }
+
     }
 }
