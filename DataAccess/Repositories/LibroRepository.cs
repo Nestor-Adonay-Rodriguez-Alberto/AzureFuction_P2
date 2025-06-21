@@ -94,9 +94,38 @@ namespace DataAccess.Repositories
             await _DbContext.SaveChangesAsync();
         }
 
-        public Task<(int, List<Libro>)> GetAllLibros(string search, int page, int pageSize)
+
+        // GET ALL:
+        public async Task<(int, List<Libro>)> GetAllLibros(string search, int page, int pageSize)
         {
-            throw new NotImplementedException();
+            IQueryable<LibroTable> query = _DbContext.Libro
+                    .Include(a => a.Autor)
+                    .Include(e => e.Editorial);
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                var term = search.Trim();
+
+                query = query.Where(x =>
+                    (x.Autor != null && x.Autor.Nombre != null && EF.Functions.Like(x.Autor.Nombre, $"%{term}%")) ||
+                    
+                    (x.Editorial != null && x.Editorial.Nombre != null && EF.Functions.Like(x.Editorial.Nombre, $"%{term}%")) ||
+
+                    (EF.Functions.Like(x.Titulo, $"%{term}%"))
+                );
+            }
+
+            int count = await query.CountAsync();
+
+            var result = await query
+                .OrderBy(x => x.Id)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            List<Libro> libros = _mapper.MapToEntityList(result);
+
+            return (count, libros);
         }
 
 

@@ -8,5 +8,6 @@ namespace DataAccess.Persistence.Mappers
     {
         Libro MapToEntity(LibroTable table);
         LibroTable MapToTable(Libro entity);
+        List<Libro> MapToEntityList(List<LibroTable> libroTables);
     }
 }

@@ -8,5 +8,6 @@ namespace AzureFuction.Biblioteca.Aplication.Mappers
     {
         Libro MapToEntity(LibroDTO dto);
         LibroDTO MapToDTO(Libro entity);
+        List<LibrosListDTO> MapToListDTO(List<Libro> libros);
     }
 }

@@ -1,6 +1,4 @@
-﻿
-
-using AzureFuction.Biblioteca.Aplication.DTOs.Models;
+﻿using AzureFuction.Biblioteca.Aplication.DTOs.Models;
 using AzureFuction.Biblioteca.Aplication.DTOs.Responses;
 using AzureFuction.Biblioteca.Aplication.Services;
 using Microsoft.AspNetCore.Http;
@@ -17,12 +15,12 @@ namespace AzureFuction.Biblioteca.Controllers
         private readonly ILogger<FnLibro> _Logger;
         private readonly ILibroService _service;
 
-
         public FnLibro(ILogger<FnLibro> logger, ILibroService service)
         {
             _Logger = logger;
             _service = service;
         }
+
 
 
         // SAVE - UPDATE:
@@ -76,6 +74,7 @@ namespace AzureFuction.Biblioteca.Controllers
             }
         }
 
+
         // DELETE:
         [Function("fn-delete-libro")]
         public async Task<IActionResult> DeleteById([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "azure-fuction/delete-libro/{Id}")] HttpRequest req, int Id)
@@ -98,5 +97,52 @@ namespace AzureFuction.Biblioteca.Controllers
                 return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
         }
+
+
+        // GET ALL:
+        [Function("fn-get-all-libros")]
+        public async Task<IActionResult> GetAllLibros([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "azure-fuction/get-all-libros")] HttpRequest req) 
+        {
+            _Logger.LogInformation("Obteniendo Todos Los Libros...");
+            try
+            {
+                string search = req.Query.ContainsKey("search") ? req.Query["search"].ToString() : string.Empty;
+                int page = 1;
+                int pageSize = 20;
+
+
+                if (req.Query.ContainsKey("page") && int.TryParse(req.Query["page"], out int parsedPage))
+                {
+                    page = parsedPage;
+                }
+
+                if (req.Query.ContainsKey("pageSize") && int.TryParse(req.Query["pageSize"], out int parsedPageSize))
+                {
+                    pageSize = parsedPageSize;
+                }          
+
+                var (totalCount, listItems) = await _service.GetAllLibros(search, page, pageSize);
+
+                PaginatedResponseDTO<List<LibrosListDTO>> response =new()
+                {
+                    Message = "Lobrios Obtenidos Exitosamente",
+                    Status = true,
+                    Data = listItems,
+                    Count = totalCount,
+                    CurrentPage = page,
+                    PageSize = pageSize
+                };
+
+                return new OkObjectResult(response);
+
+            }
+            catch (Exception ex)
+            {
+                _Logger.LogError($"Error inesperado al listar los Libros: {ex.Message}");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+        }
+   
+    
     }
 }

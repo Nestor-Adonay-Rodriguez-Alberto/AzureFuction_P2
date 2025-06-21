@@ -54,5 +54,30 @@ namespace AzureFuction.Biblioteca.Aplication.Mappers
             return libro;
         }
 
+
+        // LIST ENTITY TO DTO:
+        public List<LibrosListDTO> MapToListDTO(List<Libro> libros)
+        {
+            if (libros == null) return new List<LibrosListDTO>();
+
+            List<LibrosListDTO> librosListDTO = [];
+
+            foreach (Libro l in libros)
+            {
+                LibrosListDTO libro = new()
+                {
+                    Id = l.Id,
+                    Titulo = l.Titulo,
+                    Autor = l.Autor.Nombre,
+                    Editorial = l.Editorial.Nombre
+                };
+
+                librosListDTO.Add(libro);
+            }
+
+            return librosListDTO;
+        }
+
+
     }
 }

@@ -1,7 +1,6 @@
 ﻿using AzureFuction.Biblioteca.Aplication.DTOs.Models;
 using AzureFuction.Biblioteca.Aplication.DTOs.Responses;
 using AzureFuction.Biblioteca.Aplication.Mappers;
-using DataAccess.Persistence.Tables;
 using Domain.Entidades;
 using Domain.Repositories;
 
@@ -72,6 +71,17 @@ namespace AzureFuction.Biblioteca.Aplication.Services
             };
 
             return responseDTO;
+        }
+
+
+        // GET ALL: 
+        public async Task<(int, List<LibrosListDTO>)> GetAllLibros(string search, int page, int pageSize)
+        {
+            var (Count, libroList) = await _LibroRepository.GetAllLibros(search, page, pageSize);
+
+            List<LibrosListDTO> librosListDTOs = _mapper.MapToListDTO(libroList);
+
+            return (Count,librosListDTOs);
         }
 
     }

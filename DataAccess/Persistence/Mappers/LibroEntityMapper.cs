@@ -51,5 +51,47 @@ namespace DataAccess.Persistence.Mappers
 
             return libroTable;
         }
+
+        // LIST TABLE TO LIST ENTITY:
+        public List<Libro> MapToEntityList(List<LibroTable> libroTables)
+        {
+            if (libroTables == null) return new List<Libro>();
+
+            List<Libro> libros = [];
+
+            foreach (LibroTable lt in libroTables)
+            {
+                Libro libro = new()
+                {
+                    Id = lt.Id,
+                    Titulo = lt.Titulo,
+                    AutorId = lt.AutorId,
+                    EditorialId = lt.EditorialId
+                };
+
+                if (lt.Autor != null)
+                {
+                    libro.Autor = new Autor
+                    {
+                        Id = lt.Autor.Id,
+                        Nombre = lt.Autor.Nombre
+                    };
+                }
+
+                if (lt.Editorial != null)
+                {
+                    libro.Editorial = new Editorial
+                    {
+                        Id = lt.Editorial.Id,
+                        Nombre = lt.Editorial.Nombre
+                    };
+                }
+
+                libros.Add(libro);
+            }
+
+            return libros;
+        }
+
     }
 }
